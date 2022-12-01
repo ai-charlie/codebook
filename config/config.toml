@@ -1,0 +1,8 @@
+[face]
+img_width = 400          # 检测图像宽
+img_height = 640          # 检测图像高
+
+
+[service]
+host = 8612             # 服务端口
+port = "0.0.0.0"          # 服务ip
