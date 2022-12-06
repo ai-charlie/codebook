@@ -1,20 +1,3 @@
-#
-# SPDX-FileCopyrightText: Copyright (c) 1993-2022 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
-# SPDX-License-Identifier: Apache-2.0
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
 ARG CUDA_VERSION=11.3.1
 ARG OS_VERSION=20.04
 
@@ -44,9 +27,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends wget
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
 RUN dpkg -i cuda-keyring_1.0-1_all.deb
 
-# # Update CUDA signing key
-# RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub
-
 # Install requried libraries
 RUN apt-get update && apt-get install -y software-properties-common
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test
@@ -54,6 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4-openssl-dev \
     wget \
     git \
+    git-lfs \
     pkg-config \
     sudo \
     ssh \
@@ -69,7 +50,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git-lfs \
     libeigen3-dev
 
 # Install python3
@@ -109,12 +89,12 @@ RUN apt-mark hold libnvinfer8 libnvonnxparsers8 libnvparsers8 libnvinfer-plugin8
 # Install PyPI packages
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools>=41.0.0
-RUN pip3 config set global.index-url https://pypi.douban.com/simple/
-COPY requirements.txt /tmp/requirements.txt
-RUN pip3 install -r /tmp/requirements.txt
-RUN pip3 install jupyter jupyterlab
+RUN pip3 config set global.index-url https://pypi.mirrors.ustc.edu.cn/simple/
+# COPY requirements.txt /tmp/requirements.txt
+# RUN pip3 install -r /tmp/requirements.txt
+# RUN pip3 install jupyter jupyterlab
 # Workaround to remove numpy installed with tensorflow
-RUN pip3 install --upgrade numpy
+# RUN pip3 install --upgrade numpy
 
 # Install Cmake
 RUN cd /tmp && \
@@ -123,13 +103,9 @@ RUN cd /tmp && \
     ./cmake-3.14.4-Linux-x86_64.sh --prefix=/usr/local --exclude-subdir --skip-license && \
     rm ./cmake-3.14.4-Linux-x86_64.sh
 
-# Download NGC client
-# RUN cd /usr/local/bin && wget https://ngc.nvidia.com/downloads/ngccli_cat_linux.zip && unzip ngccli_cat_linux.zip && chmod u+x ngc-cli/ngc && rm ngccli_cat_linux.zip ngc-cli.md5 && echo "no-apikey\nascii\n" | ngc-cli/ngc config set
-
 # Set environment and working directory
 ENV TRT_LIBPATH /usr/lib/x86_64-linux-gnu
 ENV TRT_OSSPATH /workspace/TensorRT
-# ENV PATH="${PATH}:/usr/local/bin/ngc-cli"
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${TRT_OSSPATH}/build/out:${TRT_LIBPATH}"
 WORKDIR /workspace
 
