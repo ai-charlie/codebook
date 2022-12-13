@@ -10,6 +10,8 @@ torch==1.11.0+cu113; python_version=="3.10" and platform_machine=="x86_64" and s
 torch==1.11.0; python_version=="3.10" and platform_machine=="aarch64" and sys.platform=="linux"
 torchvision==0.11.3; python_version<"3.10"
 torchvision==0.12.0; python_version=="3.10"
+torchaudio==0.10.2; python_version<"3.10"
+torchaduio==1.11.0; python_version=="3.10"
 Pillow
 numpy
 pycuda<2021.1
