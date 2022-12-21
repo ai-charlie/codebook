@@ -1,5 +1,5 @@
 Project_Path=$PWD
-IMAGE_NAME=pytorch:pytorch-cuda11.3-cudnn8-devel
+IMAGE_NAME=pytorch:pytorch-1.12.1-cuda11.3-cudnn8-devel
 CONTAINER_NAME=pytorch-devel
 
 docker run  --gpus all \

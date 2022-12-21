@@ -5,10 +5,10 @@ SHELL ["/bin/bash", "-c"]
 # Setup user account
 ARG uid=1000
 ARG gid=1000
-ARG USER_NAME="devel"
+ARG USER_NAME="devel" && USER_PASSWORD='nvidia'
 RUN groupadd -r -f -g ${gid} ${USER_NAME} && useradd -o -r -l -u ${uid} -g ${gid} -ms /bin/bash ${USER_NAME}
 RUN usermod -aG sudo ${USER_NAME}
-RUN echo ${USER_NAME}:${USER_NAME}@developer | chpasswd
+RUN echo ${USER_NAME}:${USER_PASSWORD} | chpasswd
 RUN chown ${USER_NAME} /workspace
 
 # Repair the GPG signing key rotation for CUDA repositories
