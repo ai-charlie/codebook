@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-arg_dockerfile=pytorch-cuda11.3-cudnn8-devel.Dockerfile
+arg_dockerfile=pytorch-1.12.1-cuda11.3-cudnn8-devel.Dockerfile
 arg_imagename=pytorch:${arg_dockerfile%.*}
 arg_cudaversion=11.3.1
 arg_help=0
