@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-
-
-arg_dockerfile=Dockerfile
-arg_imagename=nvcr.io/nvidia/pytorch:21.10-py3-zhanglq
+arg_dockerfile=pytorch.Dockerfile
+arg_imagename=nvcr.io/nvidia/pytorch:22.12-py3-dev
 arg_help=0
 
 while [[ "$#" -gt 0 ]]; do case $1 in

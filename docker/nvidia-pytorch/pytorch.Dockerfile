@@ -3,7 +3,7 @@ ARG CUDNN_VERSION=8
 ARG OS_VERSION=20.04
 
 # 从nvidia 官方镜像库拉取基础镜像
-FROM nvcr.io/nvidia/tensorrt:21.08-py3
+FROM nvcr.io/nvidia/tensorrt:22.12-py3
 LABEL maintainer="zhanglq"
 
 ENV TRT_VERSION 8.2.5.1
@@ -28,9 +28,9 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86
 RUN dpkg -i cuda-keyring_1.0-1_all.deb
 
 # 将 apt 的升级源切换成 阿里云
-RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list && \
-    apt-get clean && \
-    rm /etc/apt/sources.list.d/*
+# RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list && \
+#     apt-get clean && \
+#     rm /etc/apt/sources.list.d/*
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git-lfs \
